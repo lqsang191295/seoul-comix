@@ -2,7 +2,7 @@ export interface iCategory {
   [key: string] : string
 }
 
-enum STORE_CATEGORY {
+export enum STORE_CATEGORY {
   SUSHI = 'SUSHI',
   UNAGI = 'UNAGI',
   TEMPURA = 'TEMPURA',

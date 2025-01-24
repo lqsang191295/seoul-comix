@@ -1,4 +1,15 @@
+"use client";
+
+import { useContext } from "react";
+import MyContext from "@/app/MyContext";
+
 export default function SearchBar() {
+  const { searchText, setSearchText } = useContext(MyContext);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(event.target.value); // Cập nhật giá trị input vào state
+  };
+
   return (
     <div className="flex items-center rounded-md bg-[#fafcfe]">
       <div className="pl-2 pr-2">
@@ -24,6 +35,8 @@ export default function SearchBar() {
         autoComplete="given-name"
         className=" w-full rounded-md py-2 bg-[#fafcfe] outline-none text-[#9da0a6] pr-4 text-sm"
         placeholder="검색어를 입력하세요"
+        onChange={handleInputChange}
+        value={searchText}
       />
     </div>
   );

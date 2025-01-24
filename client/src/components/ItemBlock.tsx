@@ -22,7 +22,7 @@ export default function ItemBlock({
 
   return (
     <Link
-      href={`/product/${id}`}
+      href={`/restaurant/${id}`}
       className="flex flex-col basis grow overflow-hidden sm:basis-[48%] lg:basis-[30%] cursor-pointer"
     >
       <div className="rounded-md overflow-hidden relative pb-[56.25%]">

@@ -4,6 +4,7 @@ import "./globals.css";
 import SearchBar from "@/components/SearchBar";
 import Categories from "@/components/Categories";
 import Footer from "@/components/Footer";
+import { MyProvider } from "./MyContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,14 +31,16 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} w-full h-screen px-8 py-2 flex flex-col`}
       >
-        <section className="header">
-          <SearchBar />
-          <Categories />
-        </section>
-        {children}
-        <section className="footer relative bottom-0">
-          <Footer />
-        </section>
+        <MyProvider>
+          <section className="header">
+            <SearchBar />
+            <Categories />
+          </section>
+          {children}
+          <section className="footer relative bottom-0">
+            <Footer />
+          </section>
+        </MyProvider>
       </body>
     </html>
   );
