@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@theme {
+  --breakpoint-xs: 30rem;
+}
+
+.slider-image {
+  width: auto !important;
+  bottom: 0 !important;
+  background-color: #00000070;
+  position: relative !important;
+}
+
+.slider-image span {
+  margin: 0 !important;
+  width: 6px !important;
+  height: 6px !important;
+  background: #ccc !important;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
