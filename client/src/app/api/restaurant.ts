@@ -205,7 +205,7 @@ const mockData: iRestaurantData[] = [
     },
   ]
 
-export const getAllRestaurants = async (): iRestaurantData[] => {
+export const getAllRestaurants = async (): Promise<iRestaurantData[]> => {
     if (mock) {
         return mockData
     }
