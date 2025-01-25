@@ -10,14 +10,18 @@ import { AppService } from './app.service';
 import { AppController } from './app.controller';
 
 @Module({
-  imports: [AppModule, TrpcModule, ProductModule, RestaurantModule
+  imports: [AppModule
+    //, TrpcModule, ProductModule, RestaurantModule
     // , PrismaModule
   ],
   providers: [
     //PrismaService, 
-    AppService,
-    RestaurantService],
-  controllers: [AppController, RestaurantController],
+    AppService
+    // , RestaurantService
+  ],
+  controllers: [AppController
+    // , RestaurantController
+  ],
 })
 
 export class AppModule {}
