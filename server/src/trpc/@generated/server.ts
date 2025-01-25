@@ -62,6 +62,17 @@ const appRouter = t.router({
       })
     })).mutation(async () => "PLACEHOLDER_DO_NOT_REMOVE" as any),
     deleteProduct: publicProcedure.input(z.object({ id: z.string() })).output(z.boolean()).mutation(async () => "PLACEHOLDER_DO_NOT_REMOVE" as any)
+  }),
+  restaurants: t.router({
+    createRestaurant: publicProcedure.input(z.object({
+      id: z.string(),
+      name: z.string(),
+      price: z.string(),
+      details: z.object({
+        description: z.string().optional(),
+        rating: z.number().optional()
+      })
+    })).query(async () => "PLACEHOLDER_DO_NOT_REMOVE" as any)
   })
 });
 export type AppRouter = typeof appRouter;
