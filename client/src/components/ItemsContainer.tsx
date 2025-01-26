@@ -8,7 +8,10 @@ import { STORE_CATEGORY } from "@/types/Category";
 import { trpc } from "@/client";
 
 export default function ItemsContainer() {
-  const { data } = trpc.restaurant.getRestaurants.useQuery();
+  const query = trpc.restaurant.getRestaurants.useQuery() as {
+    data: iRestaurantData[];
+  };
+  const data = query.data as iRestaurantData[];
   const { searchText, currentCategory } = useContext(MyContext);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [backupDataRestaurant, setBackupDataRestaurant] = useState<
@@ -19,8 +22,8 @@ export default function ItemsContainer() {
   const fetchData = () => {
     if (!data) return;
     setIsLoading(false);
-    setDataRestaurant(data);
-    setBackupDataRestaurant(data);
+    setDataRestaurant(data as iRestaurantData[]);
+    setBackupDataRestaurant(data as iRestaurantData[]);
   };
 
   const getCategoryValue = (category: string) => {
