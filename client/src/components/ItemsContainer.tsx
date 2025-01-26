@@ -68,7 +68,7 @@ export default function ItemsContainer() {
         icon: "",
       };
 
-      //@ts-nocheck
+      //@ts-check
       if (typeof result.featured === "object") {
         featured = {
           ...result.featured,
