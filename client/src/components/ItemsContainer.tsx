@@ -6,6 +6,7 @@ import MyContext from "@/app/MyProvider";
 import { iRestaurantData } from "@/types/Restaurant";
 import { STORE_CATEGORY } from "@/types/Category";
 import { trpc } from "@/client";
+import { Prisma } from "@prisma/client";
 
 export default function ItemsContainer() {
   const query = trpc.restaurant.getRestaurants.useQuery() as {
@@ -63,19 +64,18 @@ export default function ItemsContainer() {
       };
 
       const result = await mutation.mutateAsync(input);
-      let featured = {
+      const featured: {
+        text: string;
+        icon: string;
+      } = {
         text: "",
         icon: "",
       };
+      const xx = result.featured as Prisma.JsonObject;
 
-      //@ts-check
-      if (typeof result.featured === "object") {
-        featured = {
-          ...result.featured,
-        } as {
-          text: string;
-          icon: string;
-        };
+      if (xx.featured && typeof xx.featured === "object") {
+        featured.text = String(xx.text || "");
+        featured.icon = String(xx.icon);
       }
 
       const data: iRestaurantData = {
