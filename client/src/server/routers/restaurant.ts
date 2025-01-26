@@ -35,7 +35,7 @@ export const restaurantRouter = router({
 
         return prisma.restaurant.update({
             where: { id },
-            data: {isFavorite}, // Dữ liệu được truyền để update
+            data: {isFavorite}, 
           });
     })
 })
