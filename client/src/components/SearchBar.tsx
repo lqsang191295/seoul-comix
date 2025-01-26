@@ -1,7 +1,7 @@
 "use client";
 
 import { useContext } from "react";
-import MyContext from "@/app/MyContext";
+import MyContext from "@/app/MyProvider";
 
 export default function SearchBar() {
   const { searchText, setSearchText } = useContext(MyContext);

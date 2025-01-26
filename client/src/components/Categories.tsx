@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { textByStoreCategory } from "@/types/Category";
 import clsx from "clsx";
 import { getAllCategories } from "@/app/api/categories";
-import MyContext from "@/app/MyContext";
+import MyContext from "@/app/MyProvider";
 
 export default function Categories() {
   const { currentCategory, setCurrentCategory } = useContext(MyContext);
