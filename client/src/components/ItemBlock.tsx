@@ -14,24 +14,32 @@ export default function ItemBlock({
   rating,
   rating_count,
   isFavorite,
-}: iRestaurantData) {
+  onFavorite,
+}: iRestaurantData & { onFavorite: () => void }) {
   const classForFavorite = isFavorite
     ? "bg-[#c65c39a0] hover:bg-[#c65c39d9]"
     : "bg-[#cccccca0] hover:bg-[#ccccccd9]";
   const classForIconFavorite = isFavorite ? "text-[#ff2929]" : "text-zinc-50";
 
+  const handleClickFavorite = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    onFavorite();
+  };
+
   return (
     <Link
       href={`/restaurant/${id}`}
-      className="flex flex-col basis grow overflow-hidden sm:basis-[48%] lg:basis-[30%] cursor-pointer"
+      className="flex flex-col grow cursor-pointer"
     >
-      <div className="rounded-md overflow-hidden relative pb-[56.25%]">
+      <div className="rounded-md relative h-64 overflow-hidden">
         <SlideImage data={images} />
         <div
           className={clsx(
             "absolute right-3 top-2 rounded-[50%] p-2 z-40",
             classForFavorite
           )}
+          onClick={handleClickFavorite}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

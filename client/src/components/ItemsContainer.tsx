@@ -18,6 +18,7 @@ export default function ItemsContainer() {
     iRestaurantData[]
   >([]);
   const [dataRestaurant, setDataRestaurant] = useState<iRestaurantData[]>([]);
+  const mutation = trpc.restaurant.addFavorite.useMutation<iRestaurantData>();
 
   const fetchData = () => {
     if (!data) return;
@@ -52,6 +53,71 @@ export default function ItemsContainer() {
     setDataRestaurant([...data]);
   };
 
+  const onFavorite = (item: iRestaurantData) => async () => {
+    if (!item || !item.id) return;
+
+    try {
+      const input = {
+        id: item.id,
+        isFavorite: !item.isFavorite,
+      };
+
+      const result = await mutation.mutateAsync(input);
+      let featured = {
+        text: "",
+        icon: "",
+      };
+
+      if (typeof result.featured === "object") {
+        featured = {
+          ...result.featured,
+        } as {
+          text: string;
+          icon: string;
+        };
+      }
+
+      const data: iRestaurantData = {
+        ...result,
+        featured,
+      };
+
+      updateDataItemRestaurant(data);
+    } catch (error) {
+      console.error("Lỗi khi cập nhật:", error);
+    }
+  };
+
+  const updateDataItemRestaurant = (item: iRestaurantData) => {
+    const index = dataRestaurant.findIndex((data) => {
+      return data.id === item.id;
+    });
+
+    if (index < 0) return;
+
+    setDataRestaurant((prevState) => {
+      const newData = [...prevState];
+
+      newData[index] = {
+        ...newData[index],
+        ...item,
+      };
+
+      return newData;
+    });
+
+    setBackupDataRestaurant((prevState) => {
+      const newData = [...prevState];
+
+      newData[index] = {
+        ...newData[index],
+        ...item,
+      };
+
+      return newData;
+    });
+  };
+
   useEffect(() => {
     fetchData();
   }, [data]);
@@ -67,7 +133,7 @@ export default function ItemsContainer() {
 
   if (isLoading) {
     return (
-      <div className="flex flex-wrap flex-row mt-2 w-full overflow-auto gap-4 pb-2 h-full no-scrollbar">
+      <div className="w-full h-full">
         <div className="w-full h-full flex items-center justify-center text-xs">
           Loading data...
         </div>
@@ -75,17 +141,24 @@ export default function ItemsContainer() {
     );
   }
 
-  return (
-    <div className="flex flex-wrap flex-row mt-2 w-full overflow-auto gap-4 pb-2 h-full no-scrollbar">
-      {dataRestaurant && dataRestaurant.length === 0 && (
+  if (dataRestaurant && dataRestaurant.length === 0) {
+    return (
+      <div className="w-full h-full">
         <div className="w-full h-full flex items-center justify-center text-xs">
           No data!
         </div>
-      )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-2 w-full h-full overflow-auto pb-2 no-scrollbar">
       {dataRestaurant &&
         dataRestaurant.length > 0 &&
         dataRestaurant.map((data, idx) => {
-          return <ItemBlock key={idx} {...data} />;
+          return (
+            <ItemBlock key={idx} {...data} onFavorite={onFavorite(data)} />
+          );
         })}
     </div>
   );

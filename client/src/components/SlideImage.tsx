@@ -17,7 +17,7 @@ const SlideImage: React.FC<SliderProps> = ({ data }) => {
   if (!data) return;
 
   return (
-    <section className="w-full h-full absolute">
+    <section className="w-full h-full">
       <Swiper
         pagination={{
           type: "bullets",
