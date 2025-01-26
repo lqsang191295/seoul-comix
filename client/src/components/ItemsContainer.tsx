@@ -7,11 +7,6 @@ import { iRestaurantData } from "@/types/Restaurant";
 import { STORE_CATEGORY } from "@/types/Category";
 import { trpc } from "@/client";
 
-type Featured = {
-  text: string;
-  icon: string;
-};
-
 export default function ItemsContainer() {
   const query = trpc.restaurant.getRestaurants.useQuery() as {
     data: iRestaurantData[];
@@ -67,11 +62,11 @@ export default function ItemsContainer() {
         isFavorite: !item.isFavorite,
       };
 
-      const result = await mutation.mutateAsync(input);
-      const featured: Featured = result.featured as Featured;
+      await mutation.mutateAsync(input);
+
       const data: iRestaurantData = {
-        ...result,
-        featured,
+        ...item,
+        isFavorite: !item.isFavorite,
       };
 
       updateDataItemRestaurant(data);
